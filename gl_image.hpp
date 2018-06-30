@@ -97,7 +97,7 @@ public:
             format = GL_RGBA;
             break;
         default:
-            std::cout << "Cannon identify format.\n";
+            std::cout << "Cannot identify format.\n";
             assert(false);
         }
         
