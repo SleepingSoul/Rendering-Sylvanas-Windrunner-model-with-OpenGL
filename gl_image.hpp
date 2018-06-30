@@ -3,6 +3,7 @@
 #ifndef GL_IMAGE_HPP
 #define GL_IMAGE_HPP
 
+#include <cassert>
 #include <string>
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -19,7 +20,7 @@ public:
     {
         stbi_set_flip_vertically_on_load(f);
     }
-    static unsigned generateTexture2D(const char *path, const GLenum color_model = 0)
+    static unsigned generateTexture2D(const char *path)
     {
         // ------------------------------
         // creating, generating, binding ans setting-up the texture object
@@ -94,6 +95,10 @@ public:
             break;
         case 4:
             format = GL_RGBA;
+            break;
+        default:
+            std::cout << "Cannon identify format.\n";
+            assert(false);
         }
         
         if (data) {
