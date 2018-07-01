@@ -1,4 +1,4 @@
-![alt text](https://raw.githubusercontent.com/SleepingSoul/Rendering_Sylvanas_Windrunner_model_via_OpenGL/master/result.png)
+![alt text](https://raw.githubusercontent.com/SleepingSoul/Rendering_Sylvanas_Windrunner_model_via_OpenGL/master/result.gif)
 Hello!
 --------------------------------------
 
