@@ -49,6 +49,11 @@ public:
             break;
         case 4:
             format = GL_RGBA;
+        default:
+            std::cout << "Cannot identify format. Perhaps, this format is not "
+                         "supported by this library (for example, .tif will "
+                         "cause this assertion)\n";
+            assert(false);
         }
         
         if (data) {
@@ -97,7 +102,9 @@ public:
             format = GL_RGBA;
             break;
         default:
-            std::cout << "Cannot identify format.\n";
+            std::cout << "Cannot identify format. Perhaps, this format is not "
+                         "supported by this library (for example, .tif will "
+                         "cause this assertion)\n";
             assert(false);
         }
         
