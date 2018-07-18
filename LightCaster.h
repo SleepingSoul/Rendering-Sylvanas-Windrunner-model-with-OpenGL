@@ -1,4 +1,4 @@
-/*Copywrite [2018] <Tihran Katolikian>*/
+/*Copyright [2018] <Tihran Katolikian>*/
 // class LightCaster implements the light
 // caster interface
 
@@ -6,7 +6,7 @@
 #define LIGHT_CASTER
 
 #include <glm/glm.hpp>
-#include <not_std/shader.hpp>
+#include "shader.hpp"
 #include "LightCaster.h"
 
 class LightCaster
@@ -16,11 +16,11 @@ public:
     ~LightCaster();
     //---------------------------
     // setters
-    void setPosition(const glm::vec3 new_pos);
-    void setAttenuation(const glm::vec3 new_attenuation);
-    void setAmbient(const glm::vec3 new_ambient);
-    void setDiffuse(const glm::vec3 new_diffuse);
-    void setSpecular(const glm::vec3 new_specular);
+    void setPosition(const glm::vec3 &new_pos);
+    void setAttenuation(const glm::vec3 &new_attenuation);
+    void setAmbient(const glm::vec3 &new_ambient);
+    void setDiffuse(const glm::vec3 &new_diffuse);
+    void setSpecular(const glm::vec3 &new_specular);
     
     //---------------------------
     // getters

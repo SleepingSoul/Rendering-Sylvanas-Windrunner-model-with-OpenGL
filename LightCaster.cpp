@@ -15,27 +15,27 @@ LightCaster::~LightCaster()
     --light_casters_num;
 }
 
-void LightCaster::setPosition(const glm::vec3 new_pos)
+void LightCaster::setPosition(const glm::vec3 &new_pos)
 {
     position = new_pos;
 }
 
-void LightCaster::setAttenuation(const glm::vec3 new_attenuation)
+void LightCaster::setAttenuation(const glm::vec3 &new_attenuation)
 {
     attenuation = new_attenuation;
 }
 
-void LightCaster::setAmbient(const glm::vec3 new_ambient)
+void LightCaster::setAmbient(const glm::vec3 &new_ambient)
 {
     ambient = new_ambient;
 }
 
-void LightCaster::setDiffuse(const glm::vec3 new_diffuse)
+void LightCaster::setDiffuse(const glm::vec3 &new_diffuse)
 {
     diffuse = new_diffuse;
 }
 
-void LightCaster::setSpecular(const glm::vec3 new_specular)
+void LightCaster::setSpecular(const glm::vec3 &new_specular)
 {
     specular = new_specular;
 }

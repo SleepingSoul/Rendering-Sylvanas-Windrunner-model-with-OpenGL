@@ -35,7 +35,7 @@ public:
 
     void draw(Shader &shader) const
     {
-        for (auto &mesh : meshes)
+        for (const Mesh &mesh : meshes)
             mesh.draw(shader);
     }
 private:
@@ -57,7 +57,8 @@ private:
         const aiScene* scene = importer.ReadFile(path,
                                                  aiProcess_Triangulate |
                                                  aiProcess_FlipUVs |
-                                                 aiProcess_CalcTangentSpace);
+                                                 aiProcess_CalcTangentSpace |
+                                                 aiProcess_GenSmoothNormals);
         //----------------------
         // check for errors
         if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE ||

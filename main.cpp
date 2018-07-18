@@ -92,17 +92,17 @@ int main()
     }
 
     //-------------------------------
-    // enable depth test
+    // enable stencill test
     glEnable(GL_DEPTH_TEST);
 
     // ------------------------------
     // create shader program object for sylvanas
-    Shader sylvanas_shader("shaders/SylvanasVS.vs", "shaders/SylvanasFS.fs");
+    Shader sylvanas_shader("SylvanasVS.vs", "SylvanasFS.fs");
     
     // ------------------------------
     // this is out Sylvanas model, loaded via
     // assimp
-    Model sylvanas_model("resources/Sylvanas.OBJ");
+    Model sylvanas_model("resources/sylvanas.obj");
     
     
     LightCaster lc1;
@@ -141,32 +141,33 @@ int main()
 
         GL::processInput(window);
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glEnable(GL_DEPTH_TEST);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
         // ------------------------------
         // updating view and projection matrices (uniform fields) in vertex
         // shader
-        glm::mat4 projection = glm::perspective(glm::radians(GL::camera.Zoom),
+        glm::mat4 projection = glm::perspective(glm::radians(GL::camera.getZoom()),
                                                 static_cast <float>
                                                 (GL::screen_w) /
                                                 static_cast <float>
                                                 (GL::screen_h),
                                                 0.1f, 100.0f);
-        glm::mat4 view = GL::camera.GetViewMatrix();
+        glm::mat4 view = GL::camera.getViewMatrix();
 
         glm::mat4 model;
         model = glm::translate(model, {0, -0.5f, 0});
-        //model = glm::scale(model, {0.012f, 0.012f, 0.012f});
-        //model = glm::rotate(model, glm::radians(-90.f), {1, 0, 0});
         
         // ------------------------------
         // rendering the sylvanas
         sylvanas_shader.use();
-        sylvanas_shader.setVec3("viewer_pos", GL::camera.Position);
+        sylvanas_shader.setVec3("viewer_pos", GL::camera.getPosition());
         sylvanas_shader.setFloat("material.shininess", 8.f);
-        sylvanas_shader.setMat4("projection", projection);
-        sylvanas_shader.setMat4("view", view);
-        sylvanas_shader.setMat4("model", model);
+
+        sylvanas_shader.setMVP(model, view, projection);
+
+        glStencilMask(0x00);
         
         sylvanas_model.draw(sylvanas_shader);
         
@@ -180,9 +181,8 @@ int main()
         model = glm::translate(model, {1, -0.5f, 0});
         model = glm::rotate(model, glm::radians(180.f), {0, 1, 0});
         sylvanas_shader.setMat4("model", model);
-        
-        sylvanas_model.draw(sylvanas_shader);
 
+        sylvanas_model.draw(sylvanas_shader);
 
         // ------------------------------
         // glfw: swap buffers and poll IO events (keys pressed/released,
@@ -206,13 +206,13 @@ void GL::processInput(GLFWwindow *window)
         glfwSetWindowShouldClose(window, true);
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        GL::camera.ProcessKeyboard(FORWARD, GL::delta_time);
+        GL::camera.processKeyboard(Camera::FORWARD, GL::delta_time);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        GL::camera.ProcessKeyboard(BACKWARD, GL::delta_time);
+        GL::camera.processKeyboard(Camera::BACKWARD, GL::delta_time);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        GL::camera.ProcessKeyboard(LEFT, GL::delta_time);
+        GL::camera.processKeyboard(Camera::LEFT, GL::delta_time);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        GL::camera.ProcessKeyboard(RIGHT, GL::delta_time);
+        GL::camera.processKeyboard(Camera::RIGHT, GL::delta_time);
 }
 
 // ------------------------------
@@ -246,12 +246,12 @@ void GL::mouseCallback(GLFWwindow* window, double xpos, double ypos)
     GL::last_x = xpos;
     GL::last_y = ypos;
 
-    GL::camera.ProcessMouseMovement(xoffset, yoffset);
+    GL::camera.processMouseMovement(xoffset, yoffset);
 }
 
 // ------------------------------
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
 void GL::scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
-    GL::camera.ProcessMouseScroll(yoffset);
+    GL::camera.processMouseScroll(yoffset);
 }
