@@ -1,4 +1,4 @@
-/*Copywrite [2018] <Tihran Katolikian>*/
+/*Copyright [2018] <Tihran Katolikian>*/
 
 #include <glad/glad.h>
 // ------------------------------
